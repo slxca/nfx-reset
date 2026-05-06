@@ -1,8 +1,12 @@
 # NFX Reset 🎬
 
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/slxca/nfx-reset/deploy.yml?style=for-the-badge&label=PUBLISH)
+![Chrome Web Store Rating](https://img.shields.io/chrome-web-store/rating/hlacpdjegllpkilocofdfenlgiadppae?style=for-the-badge&label=RATING)
+![Chrome Web Store Users](https://img.shields.io/chrome-web-store/users/hlacpdjegllpkilocofdfenlgiadppae?style=for-the-badge&label=USERS)
 ![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/hlacpdjegllpkilocofdfenlgiadppae?style=for-the-badge&label=VERSION)
 ![Chrome Web Store Size](https://img.shields.io/chrome-web-store/size/hlacpdjegllpkilocofdfenlgiadppae?style=for-the-badge&label=SIZE)
+
+
 
 **NFX Reset** is a lightweight Chrome extension that brings back a missing feature to Netflix: **A true Reset button.** 
 
