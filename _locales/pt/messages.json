@@ -1,8 +1,8 @@
 {
   "appName": {
-    "message": "NFX Reset - Reset Netflix: Clear Watch History & Continue Watching"
+    "message": "NFX Reset - Redefinir Netflix: Limpar Histórico de Exibição e Continuar Assistindo"
   },
   "appDesc": {
-    "message": "Reset any Netflix show or movie to Episode 1, 0:00 with a click. Clean up your 'Continue Watching' row and fix broken autoplay."
+    "message": "Redefina qualquer série ou filme da Netflix para o Episódio 1, 0:00 com um clique. Limpe sua linha \"Continuar Assistindo\" e corrija o autoplay quebrado."
   }
 }
