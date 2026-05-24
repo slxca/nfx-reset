@@ -1,8 +1,8 @@
 {
   "appName": {
-    "message": "NFX Reset - Reset Netflix: Clear Watch History & Continue Watching"
+    "message": "NFX Reset - Netflixをリセット: 視聴履歴と続きを見るをクリア"
   },
   "appDesc": {
-    "message": "Reset any Netflix show or movie to Episode 1, 0:00 with a click. Clean up your 'Continue Watching' row and fix broken autoplay."
+    "message": "Netflixの番組や映画をワンクリックでエピソード1の0:00にリセットします。「続きを見る」行を整理し、壊れた自動再生を修正します。"
   }
 }
