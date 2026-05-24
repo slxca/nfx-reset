@@ -1,6 +1,5 @@
 # NFX Reset 🎬
 
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/slxca/nfx-reset/deploy.yml?style=for-the-badge&label=PUBLISH)
 ![Chrome Web Store Rating](https://img.shields.io/chrome-web-store/rating/hlacpdjegllpkilocofdfenlgiadppae?style=for-the-badge&label=RATING)
 ![Chrome Web Store Users](https://img.shields.io/chrome-web-store/users/hlacpdjegllpkilocofdfenlgiadppae?style=for-the-badge&label=USERS)
 ![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/hlacpdjegllpkilocofdfenlgiadppae?style=for-the-badge&label=VERSION)
