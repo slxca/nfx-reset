@@ -1,11 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "NFX Reset - Clear Watch History & Continue Watching",
+  "name": "__MSG_appName__",
   "short_name": "NFX Reset",
-  "version": "1.0.0",
-  "description": "Reset any show or movie to Episode 1, 0:00 with a single click. Clean up your 'Continue Watching' row and fix broken autoplay.",
-  "homepage_url": "https://github.com/slxca/nfx-reset",
+  "description": "__MSG_appDesc__",
   "default_locale": "en",
+  "version": "1.2.0",
+  "homepage_url": "https://github.com/slxca/nfx-reset",
   "permissions": [
     "cookies"
   ],
