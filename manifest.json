@@ -5,6 +5,7 @@
   "version": "1.0.0",
   "description": "Reset any show or movie to Episode 1, 0:00 with a single click. Clean up your 'Continue Watching' row and fix broken autoplay.",
   "homepage_url": "https://github.com/slxca/nfx-reset",
+  "default_locale": "en",
   "permissions": [
     "cookies"
   ],
@@ -13,7 +14,7 @@
     "https://web.prod.cloud.netflix.com/*"
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "dist/background.js"
   },
   "content_scripts": [
     {
@@ -21,7 +22,7 @@
         "https://www.netflix.com/*"
       ],
       "js": [
-        "content.js"
+        "dist/content.js"
       ],
       "run_at": "document_idle"
     }

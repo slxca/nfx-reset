@@ -22,9 +22,11 @@ The easiest way to use NFX Reset is via the Chrome Web Store.
 
 ### Manual Installation (Development)
 1. Download or clone this repository.
-2. Open `chrome://extensions` in your browser.
-3. Enable **Developer mode** (top right).
-4. Click **Load unpacked** and select the `nfx-reset` folder.
+2. Install dependencies: `npm install`
+3. Build the project: `npm run build`
+4. Open `chrome://extensions` in your browser.
+5. Enable **Developer mode** (top right).
+6. Click **Load unpacked** and select the `nfx-reset` folder.
 
 ---
 
@@ -33,15 +35,46 @@ The easiest way to use NFX Reset is via the Chrome Web Store.
 *   **Native Integration:** Adds a "Reset" button directly next to the "Play" or "Episodes" buttons.
 *   **One-Click Action:** Resets progress instantly via the Netflix GraphQL API.
 *   **Privacy First:** No external servers, no tracking, no data collection. Everything happens in your browser.
-*   **Lightweight:** Pure JavaScript. No build steps, no bloat, no dependencies.
+*   **TypeScript:** Full TypeScript support with webpack build system.
+
+---
+
+## 🚀 Development Setup
+
+This project is built with TypeScript and Webpack. To set up the development environment:
+
+### Prerequisites
+- Node.js >= 18.x
+- npm >= 9.x
+
+### Installation
+
+```bash
+npm install
+```
+
+### Build
+
+```bash
+# Production build
+npm run build
+
+# Development build with watch mode
+npm run dev
+
+# Clean dist folder
+npm clean
+```
+
+The compiled files will be output to the `dist/` directory.
 
 ---
 
 ## 🛠️ How it works
 
-1.  **Injection:** The `content.js` script identifies the current title on your Netflix page and injects a "Reset" button.
+1.  **Injection:** The `content.ts` script (compiled to `dist/content.js`) identifies the current title on your Netflix page and injects a "Reset" button.
 2.  **Authentication:** When clicked, it retrieves your current profile ID from local storage.
-3.  **Reset:** The `background.js` script sends an authenticated request to Netflix's internal API to clear the "Watched" status.
+3.  **Reset:** The `background.ts` script (compiled to `dist/background.js`) sends an authenticated request to Netflix's internal API to clear the "Watched" status.
 4.  **Refresh:** The page reloads, and you can start your show from $0:00$.
 
 ---
