@@ -1,8 +1,8 @@
 {
   "appName": {
-    "message": "NFX रीसेट - नेटफ्लिक्स रीसेट करें: देखने का इतिहास और जारी रखें देखना साफ़ करें"
+    "message": "NFX Reset - Reset Netflix: Clear Watch History & Continue Watching"
   },
   "appDesc": {
-    "message": "किसी भी नेटफ्लिक्स शो या फिल्म को एक क्लिक से एपिसोड 1, 0:00 पर रीसेट करें। अपनी 'जारी रखें देखना' पंक्ति को साफ़ करें और टूटे हुए ऑटोप्ले को ठीक करें।"
+    "message": "Reset any Netflix show or movie to Episode 1, 0:00 with a click. Clean up your 'Continue Watching' row and fix broken autoplay."
   }
 }
