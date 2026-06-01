@@ -4,60 +4,12 @@ const GRAPHQL_URL = 'https://web.prod.cloud.netflix.com/graphql';
 const QUERY_ID = '573bcc5d-b976-4302-8b57-c3f99479532d';
 const QUERY_VER = 102;
 
-interface HideMessageRequestBody {
-  operationName: string;
-  variables: {
-    input: {
-      videoId: string;
-      hideAllEpisodes: boolean;
-      profileGuid: string;
-    };
-  };
-  extensions: {
-    persistedQuery: {
-      id: string;
-      version: number;
-    };
-  };
-}
-
-interface GraphQLResponse {
-  errors?: Array<{ message: string }>;
-  data?: unknown;
-}
-
-interface ChromeMessage {
-  type: string;
-  videoId?: string;
-  profileGuid?: string;
-  originUrl?: string;
-}
-
-interface ChromeResponse {
-  ok: boolean;
-  data?: unknown;
-  error?: string;
-}
-
-
-async function hideTitleViewing(
-  videoId: string,
-  profileGuid: string,
-  originUrl: string
-): Promise<GraphQLResponse> {
+async function hideTitleViewing(videoId: string, profileGuid: string, originUrl: string): Promise<any> {
   const body = JSON.stringify({
     operationName: 'HideTitleViewing',
-    variables: {
-      input: {
-        videoId: String(videoId),
-        hideAllEpisodes: true,
-        profileGuid,
-      },
-    },
-    extensions: {
-      persistedQuery: { id: QUERY_ID, version: QUERY_VER },
-    },
-  } as HideMessageRequestBody);
+    variables: { input: { videoId: String(videoId), hideAllEpisodes: true, profileGuid } },
+    extensions: { persistedQuery: { id: QUERY_ID, version: QUERY_VER } },
+  });
 
   const res = await fetch(GRAPHQL_URL, {
     method: 'POST',
@@ -87,31 +39,27 @@ async function hideTitleViewing(
     throw new Error(`HTTP ${res.status}: ${text.slice(0, 200)}`);
   }
 
-  const data: GraphQLResponse = await res.json();
+  const data = await res.json();
   if (data?.errors?.length) {
-    throw new Error(data.errors.map(e => e.message).join(', '));
+    throw new Error(data.errors.map((e: any) => e.message).join(', '));
   }
+
   return data;
 }
 
-chrome.runtime.onMessage.addListener(
-  (msg: ChromeMessage, _sender, sendResponse: (response: ChromeResponse) => void) => {
-    if (msg.type !== 'HIDE_TITLE') return false;
+chrome.runtime.onMessage.addListener((msg, _sender, sendResponse: (response: any) => void) => {
+  if (msg.type !== 'HIDE_TITLE') return false;
 
-    const { videoId, profileGuid, originUrl } = msg;
+  const { videoId, profileGuid, originUrl } = msg;
 
-    if (!videoId || !profileGuid) {
-      sendResponse({ ok: false, error: 'Missing required parameters' });
-      return true;
-    }
+  if (!videoId || !profileGuid) {
+    sendResponse({ ok: false, error: 'Missing required parameters' });
+    return true;
+  }
 
-    hideTitleViewing(videoId, profileGuid, originUrl || '')
+  hideTitleViewing(videoId, profileGuid, originUrl || '')
       .then(data => sendResponse({ ok: true, data }))
       .catch(err => sendResponse({ ok: false, error: (err as Error).message }));
 
-    return true;
-  }
-);
-
-console.info('[NFX Reset BG] Service Worker gestartet ✓');
-
+  return true;
+});

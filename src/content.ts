@@ -3,47 +3,71 @@ import { getProfileGuid } from './utils';
 const ICON_RESET = '<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 3v5h5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
 const ICON_SPIN = '<circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.5" stroke-dasharray="28 28" stroke-linecap="round" style="animation:nfx-spin .8s linear infinite;transform-origin:center"/>';
 
-function createResetButton(episodeItem: Element): void {
-  const episodeDuration = episodeItem.querySelector('.titleCard-duration');
+function createResetButton(originalButton: Element): void {
+  const container = originalButton.parentNode?.parentElement;
 
-  if (!episodeDuration || !episodeDuration.parentNode) return;
-  if (episodeDuration.parentNode.querySelector('[data-dup-clone-episode="true"]')) return;
+  if (!container || !container.parentNode) return;
+  if (container.parentNode.querySelector('[data-dup-clone="true"]')) return;
 
+  const nfxButton = container.cloneNode(true) as HTMLElement;
+  const svgElement = nfxButton.querySelector('svg') as SVGElement | null;
+  if (!svgElement) return;
 
-  const resetButton = document.createElement('span');
-  resetButton.dataset.dupCloneEpisode = 'true';
-  resetButton.className = 'nfx-reset-button';
-  resetButton.innerText = 'Reset';
-  resetButton.style.padding = '0px 10px 0px 0px'
-  resetButton.style.zIndex = '999';
+  svgElement.innerHTML = ICON_RESET;
+  svgElement.setAttribute('fill', 'none');
 
-  resetButton.addEventListener('mouseenter', () => {
-    resetButton.style.textDecoration = 'underline';
+  nfxButton.dataset.dupClone = 'true';
+  nfxButton.removeAttribute('data-uia');
+
+  nfxButton.addEventListener('click', async (e: Event) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    const guid = getProfileGuid();
+    if (!guid) return;
+
+    svgElement.innerHTML = ICON_SPIN;
+
+    const hrefVideo = (container as HTMLElement)
+        .closest('.buttonControls--container')
+        ?.querySelector('a')
+        ?.getAttribute('href');
+    if (!hrefVideo) return;
+
+    const url = new URL(hrefVideo, 'https://example.com');
+    const tctx = url.searchParams.get('tctx');
+
+    if (tctx) {
+      const match = tctx.match(/Video%3A(\d+)/) || tctx.match(/Video:(\d+)/);
+
+      if (match) {
+        try {
+          const resp = await chrome.runtime.sendMessage({
+            type: 'HIDE_TITLE',
+            videoId: match[1],
+            profileGuid: guid,
+            originUrl: window.location.href,
+          });
+
+          if (!resp?.ok) svgElement.innerHTML = ICON_RESET;
+
+          window.location.reload();
+        } catch (err) {
+          console.log('[NFX Reset] Error sending message to background script', err);
+        }
+      }
+    }
   });
 
-  resetButton.addEventListener('mouseleave', () => {
-    resetButton.style.textDecoration = 'none';
-  });
-
-  resetButton.addEventListener('click', () => {
-    alert('E')
-  });
-
-  const seperator = document.createElement('span');
-  seperator.dataset.dupCloneEpisode = 'true';
-  seperator.innerText = '•'
-  seperator.style.color = '#404040'
-
-  episodeDuration.insertBefore(seperator, episodeDuration.firstChild);
-  episodeDuration.insertBefore(resetButton, episodeDuration.firstChild);
+  (container.parentNode as ParentNode).insertBefore(nfxButton, container.nextSibling);
 }
 
 function injectResetButton(): void {
-  const buttons = document.querySelectorAll('.episode-item');
+  const buttons = document.querySelectorAll('[data-uia*="my-list"]');
   if (buttons.length > 0) {
     buttons.forEach(createResetButton);
   } else {
-    document.querySelectorAll("[data-dup-clone-episode='true']").forEach((c) => c.remove());
+    document.querySelectorAll("[data-dup-clone='true']").forEach((c) => c.remove());
   }
 }
 
